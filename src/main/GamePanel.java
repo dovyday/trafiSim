@@ -23,8 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     TileManager tileM = new TileManager(this);
-    List<Car> cars = new ArrayList<>();
-
+    public List<Car> cars = new ArrayList<>();
+    private JunctionChecker junctionChecker;
 
     public GamePanel() {
         this.setPreferredSize((new Dimension(screenWidth, screenHeight)));
@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         initCars();
+        junctionChecker = new JunctionChecker(this);
     }
 
     public void startGameThread() {
@@ -83,15 +84,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
     public void update() {
+        junctionChecker.updateJunction();
+
         for (Car car : cars) {
             car.move();
+
         }
     }
     public void initCars(){
-        cars.add(new Car(this, 30, "right"));
-        cars.add(new Car(this, 30, "left"));
-        cars.add(new Car(this, 30, "down"));
-        cars.add(new Car(this, 30, "up"));
+        cars.add(new Car(this, 13, "right"));
+        cars.add(new Car(this, 12, "left"));
+        cars.add(new Car(this, 11, "down"));
+        cars.add(new Car(this, 10, "up"));
     }
 }
 

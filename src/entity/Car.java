@@ -8,8 +8,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static main.JunctionChecker.*;
+
 public class Car extends Entity{
     GamePanel gp;
+    private boolean canMove = true;
 
     public Car(GamePanel gp, double kmhSpeed, String direction) {
         this.gp = gp;
@@ -24,6 +27,12 @@ public class Car extends Entity{
     public int getSpriteNum() {
         return spriteNum;
     }
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+    public boolean canMove() {
+        return canMove;
+    }
 
     public void getPlayerImage() {
         try {
@@ -36,6 +45,8 @@ public class Car extends Entity{
         }
     }
     public void move() {
+        if (!canMove) return;
+
         switch (getSpriteNum()){
             case 1:
                 worldY -= pixelSpeed;
@@ -49,6 +60,26 @@ public class Car extends Entity{
             case 4:
                 worldX -= pixelSpeed;
                 break;
+        }
+        checkJunctionBoundary();
+    }
+
+    private void checkJunctionBoundary() {
+        // If we've moved past the junction, ensure we can keep moving
+        if (isPastJunction()) {
+            this.canMove = true;
+        }
+    }
+    private boolean isPastJunction() {
+        int tileX = getCarTileX();
+        int tileY = getCarTileY();
+
+        switch(getSpriteNum()) {
+            case 1: return tileY < JUNCTION_MIN_Y; // Up
+            case 2: return tileY > JUNCTION_MAX_Y; // Down
+            case 3: return tileX > JUNCTION_MAX_X; // Right
+            case 4: return tileX < JUNCTION_MIN_X; // Left
+            default: return true;
         }
     }
     public void draw(Graphics2D g2) {
@@ -92,6 +123,12 @@ public class Car extends Entity{
                 setSpriteNum(4);
                 break;
         }
+    }
+    public int getCarTileX() {
+        return worldX / gp.tileSize;
+    }
+    public int getCarTileY() {
+        return worldY / gp.tileSize;
     }
 
 }
