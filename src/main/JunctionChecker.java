@@ -12,7 +12,7 @@ public class JunctionChecker {
     GamePanel gp;
     Queue<Car> waitingCars = new LinkedList<>();
 
-    // Define junction boundaries
+
     public static final int JUNCTION_MIN_X = 7;
     public static final int JUNCTION_MAX_X = 9;
     public static final int JUNCTION_MIN_Y = 4;
@@ -45,7 +45,6 @@ public class JunctionChecker {
         }
     }
     private boolean isAboutToEnterJunction(Car car) {
-        // Check if car is one tile away from junction based on its direction
         int tileX = car.getCarTileX();
         int tileY = car.getCarTileY();
 
@@ -94,29 +93,24 @@ public class JunctionChecker {
     private Car determinePriorityCar() {
         if (waitingCars.isEmpty()) return null;
 
-        // Simple right-hand rule implementation
-        // Cars coming from the right have priority
+
         List<Car> carList = new ArrayList<>(waitingCars);
 
-        // Sort based on direction (right-hand rule priority)
         carList.sort((c1, c2) -> {
-            // Higher priority comes first
             return Integer.compare(getDirectionPriority(c2), getDirectionPriority(c1));
         });
 
         return carList.get(0);
     }
     private int getDirectionPriority(Car car) {
-        // Assign priority based on right-hand rule
-        // The car to the right has higher priority
         switch(car.getSpriteNum()) {
-            case 1: // up - gives way to right (left-turning cars)
+            case 1:
                 return 1;
-            case 2: // down - gives way to left (right-turning cars)
+            case 2:
                 return 3;
-            case 3: // right - highest priority
+            case 3:
                 return 4;
-            case 4: // left - lowest priority
+            case 4:
                 return 2;
             default:
                 return 0;

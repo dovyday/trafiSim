@@ -5,6 +5,7 @@ import main.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*;
+import java.util.Objects;
 
 public class TileManager {
     GamePanel gp;
@@ -24,22 +25,22 @@ public class TileManager {
     public void getTileImage() {
         try {
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road_line_up.png"));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/road_line_up.png")));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 
             tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road_line_down.png"));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/road_line_down.png")));
 
             tile[3] = new Tile();
-            tile[3].image = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\tiles\\road_line_right.png"));
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/road_line_right.png")));
 
             tile[4] = new Tile();
-            tile[4].image = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\tiles\\road_line_left.png"));
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/road_line_left.png")));
 
             tile[5] = new Tile();
-            tile[5].image = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\tiles\\road.png"));
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/road.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

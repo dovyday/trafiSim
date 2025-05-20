@@ -5,13 +5,13 @@ import main.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Objects;
 
 import static main.JunctionChecker.*;
 
-public class Car extends Entity{
-    GamePanel gp;
+public class Car extends Entity implements Serializable {
+    public transient GamePanel gp;
     private boolean canMove = true;
 
     public Car(GamePanel gp, double kmhSpeed, String direction) {
@@ -36,10 +36,10 @@ public class Car extends Entity{
 
     public void getPlayerImage() {
         try {
-            up = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\cars\\car_up.png"));
-            down = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\cars\\car_down.png"));
-            right = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\cars\\car_right.png"));
-            left = ImageIO.read(new File("C:\\Users\\dove\\IdeaProjects\\trafi\\.idea\\res\\cars\\car_left.png"));
+            up = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/cars/car_up.png")));
+            down = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/cars/car_down.png")));
+            right = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/cars/car_right.png")));
+            left = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/cars/car_left.png")));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -65,7 +65,6 @@ public class Car extends Entity{
     }
 
     private void checkJunctionBoundary() {
-        // If we've moved past the junction, ensure we can keep moving
         if (isPastJunction()) {
             this.canMove = true;
         }
@@ -130,5 +129,7 @@ public class Car extends Entity{
     public int getCarTileY() {
         return worldY / gp.tileSize;
     }
+
+
 
 }
