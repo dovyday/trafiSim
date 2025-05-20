@@ -251,7 +251,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 });
 
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
                 isLoading = false;
             }
         });
